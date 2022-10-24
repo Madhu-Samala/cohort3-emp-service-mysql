@@ -16,4 +16,5 @@ public interface EmployeeService {
 	public List<Employee> getAllEmployeeByDepartment(String name);
 	List<Employee> findEmployeesByGenderAndDepartment(char gender, String department);
 	Double findTotalSalariesOfAllEmployees();
+	 Employee updateEmployeeDetails(int id, String department, double salary) throws EmployeeNotFoundException;
 }

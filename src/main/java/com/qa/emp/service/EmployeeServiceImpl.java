@@ -95,4 +95,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return this.empRepository.findTotalSalariesOfAllEmployees();
 	}
 
+	@Override
+	public Employee updateEmployeeDetails(int id, String department, double salary) throws EmployeeNotFoundException {
+		Employee updatedEmployee = null;
+		 Optional<Employee> findByIdOptional = this.empRepository.findById(id);
+		 if(!findByIdOptional.isPresent())
+			 throw new EmployeeNotFoundException();
+		 else{
+			 int rows = this.empRepository.updateEmployeeDetails(id, department, salary);
+			 if(rows > 0)
+				 updatedEmployee = this.empRepository.findById(id).get();
+		 }
+		 return updatedEmployee;
+	}
+
 }

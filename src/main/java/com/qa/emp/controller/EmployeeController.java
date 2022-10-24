@@ -2,6 +2,8 @@ package com.qa.emp.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +63,7 @@ public class EmployeeController {
 	
 	
 	@PostMapping("/employees")
-	public ResponseEntity<?> addEmployee(@RequestBody Employee employee) throws EmployeeAlreadyExistsException{
+	public ResponseEntity<?> addEmployee(@Valid @RequestBody Employee employee) throws EmployeeAlreadyExistsException{
 		try {
 			Employee addedEmployee = this.empService.addEmployee(employee);
 			System.out.println("added employee" + addedEmployee);
@@ -143,4 +145,20 @@ public class EmployeeController {
 		
 		return responseEntity;
 	}
+	
+	@PutMapping("/employees/updateprofile")
+	public ResponseEntity<?> updateEmployeeDetails(@RequestBody Employee employee) throws EmployeeNotFoundException{
+		try {
+			Employee updatedEmployee = this.empService.updateEmployeeDetails(employee.getId(),employee.getDepartment(),employee.getSalary());			
+			responseEntity = new ResponseEntity<>(updatedEmployee,HttpStatus.OK);
+		} catch(EmployeeNotFoundException e) {
+			throw e;
+		}catch(Exception e) {
+			e.printStackTrace();
+			responseEntity = new ResponseEntity<>("some internal error occured..Please try again",HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		return responseEntity;
+	}
+	
 }
