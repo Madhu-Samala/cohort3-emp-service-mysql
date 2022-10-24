@@ -13,5 +13,7 @@ public interface EmployeeService {
 	public Employee addEmployee(Employee employee) throws EmployeeAlreadyExistsException;
 	public Employee updateEmployee(Employee employee) throws EmployeeNotFoundException;
 	public boolean deleteEmployee(int id) throws EmployeeNotFoundException;
-
+	public List<Employee> getAllEmployeeByDepartment(String name);
+	List<Employee> findEmployeesByGenderAndDepartment(char gender, String department);
+	Double findTotalSalariesOfAllEmployees();
 }

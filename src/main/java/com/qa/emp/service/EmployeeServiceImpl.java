@@ -77,4 +77,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 		 return status;
 	}
 
+	@Override
+	public List<Employee> getAllEmployeeByDepartment(String name) {
+		
+		return this.empRepository.findByDepartment(name);
+	}
+
+	@Override
+	public List<Employee> findEmployeesByGenderAndDepartment(char gender, String department) {
+		
+		return this.empRepository.findEmployeesByGenderAndDepartment(gender, department);
+	}
+
+	@Override
+	public Double findTotalSalariesOfAllEmployees() {
+		
+		return this.empRepository.findTotalSalariesOfAllEmployees();
+	}
+
 }

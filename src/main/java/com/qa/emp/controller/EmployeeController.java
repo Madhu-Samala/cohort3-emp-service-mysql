@@ -107,4 +107,40 @@ public class EmployeeController {
 		}
 		return responseEntity;
 	}
+	
+	@GetMapping("/employees/department/{name}")
+	public ResponseEntity<?> getAllEmployeesByDepartment(@PathVariable("name") String name){
+		try {
+			List<Employee> empListByDepartment = this.empService.getAllEmployeeByDepartment(name);
+			responseEntity = new ResponseEntity<>(empListByDepartment,HttpStatus.OK);
+		} catch(Exception e) {
+			responseEntity = new ResponseEntity<>("some internal error occured..Please try again",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return responseEntity;
+	}
+	
+	@GetMapping("/employees/gender/{gender}/department/{dept}")
+	public ResponseEntity<?> findEmployeesByGenderAndDepartment(@PathVariable("gender") char gender,@PathVariable("dept") String department){
+		try {
+			List<Employee> empListByGenderAndDepartment = this.empService.findEmployeesByGenderAndDepartment(gender,department);
+			responseEntity = new ResponseEntity<>(empListByGenderAndDepartment,HttpStatus.OK);
+		} catch(Exception e) {
+			responseEntity = new ResponseEntity<>("some internal error occured..Please try again",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return responseEntity;
+	}
+	
+	@GetMapping("/employees/total_salary")
+	public ResponseEntity<?> findTotalSalariesOfAllEmployees(){
+		try {
+			Double findTotalSalariesOfAllEmployees = this.empService.findTotalSalariesOfAllEmployees();
+			responseEntity = new ResponseEntity<>(findTotalSalariesOfAllEmployees,HttpStatus.OK);
+		} catch(Exception e) {
+			responseEntity = new ResponseEntity<>("some internal error occured..Please try again",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return responseEntity;
+	}
 }

@@ -30,6 +30,9 @@ public class Employee {
 	@Column(name = "emp_salary")
 	private double salary;
 	
+	@Column(name = "emp_gender")
+	private char gender;
+	
 	@Column(name = "emp_age")
 	private byte age;
 	
