@@ -3,6 +3,7 @@ package com.qa.emp.controller;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qa.emp.dto.EmployeeDto;
 import com.qa.emp.entity.Employee;
 import com.qa.emp.exception.EmployeeAlreadyExistsException;
 import com.qa.emp.exception.EmployeeNotFoundException;
@@ -95,7 +97,7 @@ public class EmployeeController {
 	}
 	
 	@DeleteMapping("/employees/{id}")
-	public ResponseEntity<?> deleteEmployee(@PathVariable("id") int id) throws EmployeeNotFoundException{
+	public ResponseEntity<?> deleteEmployee(@PathVariable("id") @Min(value = 0,message = "id should be greater than 0")  int id) throws EmployeeNotFoundException{
 		try {
 			boolean status = this.empService.deleteEmployee(id);			
 			if(status)
@@ -160,5 +162,21 @@ public class EmployeeController {
 		}
 		return responseEntity;
 	}
+	
+	
+	//api/v1/employees/emp-dept-details
+	//id,name,dept,salary ( List of EmployeeDtos)
+	@GetMapping("/employees/emp-dept-details")
+	public ResponseEntity<?> getAllEmployeeDeptDetails(){
+		try {
+			List<EmployeeDto> empDtoList = this.empService.getEmployeeDeptDetails();
+			responseEntity = new ResponseEntity<>(empDtoList,HttpStatus.OK);
+		} catch(Exception e) {
+			responseEntity = new ResponseEntity<>("some internal error occured..Please try again",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return responseEntity;
+	}
+	
 	
 }
